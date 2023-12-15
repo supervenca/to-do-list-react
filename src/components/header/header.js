@@ -1,8 +1,8 @@
 import './header.css';
 
-const Header = () => {
+const Header = (props) => {
     return (
-    <h1>Task List</h1>
+    <h1 className="text-center mb-4">{props.name}</h1>
     )
 }
 
