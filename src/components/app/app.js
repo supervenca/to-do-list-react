@@ -27,7 +27,32 @@ class App extends Component {
         {text: 'Monthly task 2', checked: 'checked', id: 7}
       ]
     }
+    this.maxId = 8;
   }
+  deleteItem = (id) => {
+    this.setState(({today, week, month}) =>{
+      return {
+        today: today.filter(item => item.id !== id), 
+        week: week.filter(item => item.id !== id),
+        month: month.filter(item => item.id !== id)
+      }
+    })
+  }
+
+  addItem = (text) => {
+    const newItem = {
+      text: text,
+      checked: '',
+      id: this.maxId++
+    }
+    this.setState(({today}) => {
+      const newToday = [...today, newItem];
+      return {
+          today: newToday
+      }
+    });
+  }
+
   render(){
     const {today, week, month} = this.state;
 
@@ -38,20 +63,31 @@ class App extends Component {
         <Row>
           <Col>
             <Subheader name="Tasks for today"/>
-            <List data={today}/>
-            <FormAddTask deadline="today"/>
+            <List 
+              data={today} 
+              onDelete={this.deleteItem}
+            />
           </Col>
           <Col>
             <Subheader name="Tasks for the week"/>
-            <List data={week}/>
-            <FormAddTask deadline="this week"/>
+            <List 
+              data={week} 
+              onDelete={this.deleteItem}
+              onAdd={this.addItem}
+            />
           </Col>
           <Col>
             <Subheader name="Tasks for the month"/>
-            <List data={month}/>
-            <FormAddTask deadline="this month"/>
+            <List 
+              data={month} 
+              onDelete={this.deleteItem}
+              onAdd={this.addItem}
+            />
           </Col>
         </Row>
+        <div className="d-flex justify-content-center">
+            <FormAddTask onAdd={this.addItem}/>
+        </div>
         </Container>
         
       </div>
