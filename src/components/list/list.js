@@ -3,7 +3,7 @@ import ListItem from "../list-item/list-item";
 
 import './list.css';
 
-const List = ({data, onDelete}) => {
+const List = ({data, onDelete, onToggleChecked}) => {
 
     const elements = data.map(item => {
         const {text, checked, id} = item;
@@ -14,6 +14,7 @@ const List = ({data, onDelete}) => {
                 checked={checked} 
                 key={id} 
                 onDelete={() => onDelete(id)}
+                onToggleChecked={() => onToggleChecked(id)}
             />
         )
     })

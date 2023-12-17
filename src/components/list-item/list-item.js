@@ -2,7 +2,7 @@ import './list-item.css'
 import { Trash3Fill } from 'react-bootstrap-icons';
 
 const ListItem = (props) => {
-    const {text, checked, onDelete} = props;
+    const {text, checked, onDelete, onToggleChecked} = props;
 
     let liClassNames = "list-group-item border-0 d-flex align-items-center justify-content-between p-3";
 
@@ -19,6 +19,8 @@ const ListItem = (props) => {
                     value="" 
                     aria-label="..." 
                     checked={checked}
+                    role="button"
+                    onClick={onToggleChecked}
                 />
                 {text}
             </div>

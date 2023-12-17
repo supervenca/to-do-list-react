@@ -39,25 +39,64 @@ class App extends Component {
     })
   }
 
-  addItem = (text) => {
+  addItemDay = (text) => {
     const newItem = {
       text: text,
       checked: '',
       id: this.maxId++
     }
     this.setState(({today}) => {
-      const newToday = [...today, newItem];
+      const newArr = [...today, newItem]
       return {
-          today: newToday
+          today: newArr
       }
     });
+  }
+  addItemWeek = (text) => {
+    const newItem = {
+      text: text,
+      checked: '',
+      id: this.maxId++
+    }
+    this.setState(({week}) => {
+      const newArr = [...week, newItem]
+      return {
+          week: newArr
+      }
+    });
+  }
+  addItemMonth = (text) => {
+    const newItem = {
+      text: text,
+      checked: '',
+      id: this.maxId++
+    }
+    this.setState(({month}) => {
+      const newArr = [...month, newItem]
+      return {
+          month: newArr
+      }
+    });
+  }
+  onToggleChecked = (id) => {
+    this.setState(({today}) =>({
+      today: today.map(item => {
+        if(item.id === id && item.checked === 'checked'){
+          return {...item, checked: ''}
+        }
+        if(item.id === id && item.checked === ''){
+          return {...item, checked: 'checked'}
+        }
+        return item;
+      })
+    }))
   }
 
   render(){
     const {today, week, month} = this.state;
 
     return (
-      <div className="App">
+      <>
         <Container className="m-5 p-3 rounded mx-auto bg-light shadow">
         <Header name="Task List"/>
         <Row>
@@ -66,6 +105,7 @@ class App extends Component {
             <List 
               data={today} 
               onDelete={this.deleteItem}
+              onToggleChecked={this.onToggleChecked}
             />
           </Col>
           <Col>
@@ -73,7 +113,6 @@ class App extends Component {
             <List 
               data={week} 
               onDelete={this.deleteItem}
-              onAdd={this.addItem}
             />
           </Col>
           <Col>
@@ -81,16 +120,23 @@ class App extends Component {
             <List 
               data={month} 
               onDelete={this.deleteItem}
-              onAdd={this.addItem}
             />
           </Col>
         </Row>
-        <div className="d-flex justify-content-center">
-            <FormAddTask onAdd={this.addItem}/>
-        </div>
+        <Row>
+          <Col>
+            <FormAddTask onAdd={this.addItemDay}/>
+          </Col>
+          <Col>
+            <FormAddTask onAdd={this.addItemWeek}/>
+          </Col>
+          <Col>
+            <FormAddTask onAdd={this.addItemMonth}/>
+          </Col>
+        </Row>
         </Container>
         
-      </div>
+      </>
     )
   }
 }

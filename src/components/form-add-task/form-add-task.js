@@ -6,7 +6,8 @@ class FormAddTask extends Component {
         super(props);
         this.state = {
             text: '',
-            checked: ''
+            checked: '',
+            deadline: ''
         }
     }
     onValueChange = (e) => {
@@ -16,18 +17,20 @@ class FormAddTask extends Component {
     }
     onSubmit = (e) => {
         e.preventDefault();
+        if (this.state.text.length < 3) {return};
         this.props.onAdd(this.state.text, this.state.checked);
         this.setState({
             text: '',
-            checked: ''
+            checked: false
         })
     }
     render(){
         const {text} = this.state;
+        
         return(
             <Form onSubmit = {this.onSubmit}>
                 <Row>
-                    <Form.Label>New task</Form.Label>
+                    <Form.Label>Add new task</Form.Label>
                     <Col>
                         <Form.Control 
                             type="text" 
