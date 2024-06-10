@@ -77,7 +77,7 @@ class App extends Component {
         <Container className="m-5 p-3 rounded mx-auto bg-light shadow">
         <Header name="Task List"/>
         <Row>
-          <Col>
+          <Col sm={12} md={6} lg={4}>
             <Subheader name="Tasks for today"/>
             <List 
               data={today} 
@@ -85,7 +85,7 @@ class App extends Component {
               onToggleChecked={this.onToggleChecked}
             />
           </Col>
-          <Col>
+          <Col sm={12} md={6} lg={4}>
             <Subheader name="Tasks for the week"/>
             <List 
               data={week} 
@@ -93,7 +93,7 @@ class App extends Component {
               onToggleChecked={this.onToggleChecked}
             />
           </Col>
-          <Col>
+          <Col sm={12} md={6} lg={4}>
             <Subheader name="Tasks for the month"/>
             <List 
               data={month} 

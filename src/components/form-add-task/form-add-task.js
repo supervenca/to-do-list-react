@@ -32,7 +32,7 @@ class FormAddTask extends Component {
             <Form onSubmit = {this.onSubmit}>
                 <Row>
                     <Form.Label>Add new task</Form.Label>
-                    <Col>
+                    <Col className='mb-3' sm={12} md={6}>
                         <Form.Control 
                             type="text" 
                             placeholder="Enter new task" 
@@ -41,8 +41,7 @@ class FormAddTask extends Component {
                             onChange={this.onValueChange}
                         />
                     </Col>
-                    
-                    <Col>
+                    <Col className='mb-3' sm={12} md={3}>
                         <Form.Select
                         value={deadline}
                             onChange={this.onDeadlineChange}>
