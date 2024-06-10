@@ -6,8 +6,7 @@ class FormAddTask extends Component {
         super(props);
         this.state = {
             text: '',
-            checked: '',
-            deadline: ''
+            deadline: 'today'
         }
     }
     onValueChange = (e) => {
@@ -15,18 +14,20 @@ class FormAddTask extends Component {
             [e.target.name] : e.target.value
         })
     }
+    onDeadlineChange = (e) => {
+        this.setState({deadline: e.target.value})
+    }
     onSubmit = (e) => {
         e.preventDefault();
         if (this.state.text.length < 3) {return};
-        this.props.onAdd(this.state.text, this.state.checked);
+        this.props.onAdd(this.state.text, this.state.deadline);
         this.setState({
             text: '',
-            checked: false
+            deadline: 'today'
         })
     }
     render(){
-        const {text} = this.state;
-        
+        const {text, deadline} = this.state;
         return(
             <Form onSubmit = {this.onSubmit}>
                 <Row>
@@ -39,6 +40,16 @@ class FormAddTask extends Component {
                             value={text}
                             onChange={this.onValueChange}
                         />
+                    </Col>
+                    
+                    <Col>
+                        <Form.Select
+                        value={deadline}
+                            onChange={this.onDeadlineChange}>
+                            <option selected value='today'>For today</option>
+                            <option value='week'>For this week</option>
+                            <option value='month'>For this month</option>
+                        </Form.Select>
                     </Col>
                     <Col>
                         <Button 

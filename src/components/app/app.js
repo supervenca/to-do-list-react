@@ -39,57 +39,34 @@ class App extends Component {
     })
   }
 
-  addItemDay = (text) => {
+  addItem = (text, deadline) => {
     const newItem = {
       text: text,
       checked: '',
       id: this.maxId++
     }
-    this.setState(({today}) => {
-      const newArr = [...today, newItem]
+    this.setState((state) => {
+      const newArr = [...state[deadline], newItem]
       return {
-          today: newArr
+          [deadline]: newArr
       }
     });
   }
-  addItemWeek = (text) => {
-    const newItem = {
-      text: text,
-      checked: '',
-      id: this.maxId++
-    }
-    this.setState(({week}) => {
-      const newArr = [...week, newItem]
-      return {
-          week: newArr
-      }
-    });
-  }
-  addItemMonth = (text) => {
-    const newItem = {
-      text: text,
-      checked: '',
-      id: this.maxId++
-    }
-    this.setState(({month}) => {
-      const newArr = [...month, newItem]
-      return {
-          month: newArr
-      }
-    });
-  }
+
   onToggleChecked = (id) => {
-    this.setState(({today}) =>({
-      today: today.map(item => {
-        if(item.id === id && item.checked === 'checked'){
-          return {...item, checked: ''}
-        }
-        if(item.id === id && item.checked === ''){
-          return {...item, checked: 'checked'}
+    this.setState((state) => {
+      const toggleCheck = (items) => items.map(item => {
+        if (item.id === id) {
+          return { ...item, checked: item.checked === 'checked' ? '' : 'checked' };
         }
         return item;
-      })
-    }))
+      });
+      return {
+        today: toggleCheck(state.today),
+        week: toggleCheck(state.week),
+        month: toggleCheck(state.month),
+      };
+    });
   }
 
   render(){
@@ -113,6 +90,7 @@ class App extends Component {
             <List 
               data={week} 
               onDelete={this.deleteItem}
+              onToggleChecked={this.onToggleChecked}
             />
           </Col>
           <Col>
@@ -120,22 +98,16 @@ class App extends Component {
             <List 
               data={month} 
               onDelete={this.deleteItem}
+              onToggleChecked={this.onToggleChecked}
             />
           </Col>
         </Row>
         <Row>
           <Col>
-            <FormAddTask onAdd={this.addItemDay}/>
-          </Col>
-          <Col>
-            <FormAddTask onAdd={this.addItemWeek}/>
-          </Col>
-          <Col>
-            <FormAddTask onAdd={this.addItemMonth}/>
+            <FormAddTask onAdd={this.addItem}/>
           </Col>
         </Row>
         </Container>
-        
       </>
     )
   }
